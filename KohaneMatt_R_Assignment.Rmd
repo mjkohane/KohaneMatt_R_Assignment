@@ -1,0 +1,94 @@
+---
+title: "R_Assignment"
+author: "Matt Kohane"
+date: "October 13, 2019"
+output: html_document
+---
+
+
+
+```{r}
+
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+
+##Data Importing:
+
+#Example import:
+dvst <- read_csv("https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-08-r/Dataset_S1.txt")
+dvst
+
+
+#Assignment import:
+snp_pos <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2019/master/assignments/UNIX_Assignment/snp_position.txt", header = TRUE, sep ="\t")
+snp_pos
+
+fang <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2019/master/assignments/UNIX_Assignment/fang_et_al_genotypes.txt", header = TRUE,sep = "\t")
+fang
+
+
+#Use Relative path: ./data/maize.output for example.
+#pivot_longer(-SampleID, names_to = "SNPname", values_to = "SNPvalue")
+
+```
+
+#Analysis
+```{r}
+#Some basic information about the dataframes
+nrow(snp_pos) #983 rows
+nrow(fang) # 2782 rows 
+
+ncol(snp_pos) #15 columns
+ncol(fang) #986 columns
+
+dim(snp_pos) #Verifying rows and columns
+dim(fang) #Verifying rows and columns
+
+#Prints out the column names for reference
+names(snp_pos)
+names(fang)
+
+#Some more information about the structure of our dataframes
+str(snp_pos) 
+str(fang)
+
+#Taking a look at the data
+head(snp_pos)
+head(fang)
+```
+##Data Processing and Transforming
+```{r}
+#Transpose the fang file, this is much easier in R than in Unix command line.
+transposed_fang <- t(fang)
+
+#Filter the fang file for the necessary groups, similar to "grep" in Unix.
+teosinte <- filter(fang, Group %in% c('ZMMIL', 'ZMMLR', 'ZMMMR'))
+maize <- filter(fang, Group %in% c('ZMPBA', 'ZMPIL', 'ZMPJA'))
+
+#Checking to make sure correct groups have been selected, looks good.
+head(teosinte)
+head(maize)
+
+#Checking unique groups in the columns for assurance.
+unique(teosinte$Group)
+unique(maize$Group)
+#So far so good.
+
+
+#Now to transpose the data.
+transposed_teosinte <- t(teosinte)
+transposed_maize <- t(maize)
+
+transposed_fang
+
+
+```
+
+
+```{r}
+
+```
+
+
+
+
