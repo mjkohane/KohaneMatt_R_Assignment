@@ -117,12 +117,32 @@ library(filesstrings)
 setwd("C:/Users/mjkoh")
 setwd("./KohaneMatt_R_Assignment")
 
+
+##Use your specific path to navigate to the maize directory from this assignment.
+
+setwd("C:/Users/mjkoh/Desktop/BCB546x/KohaneMatt_BCB546_Assignments/KohaneMatt_R_Assignment/maize")
+
 getwd()
 
+file.move("C:\Users\mjkoh\Desktop\BCB546x\KohaneMatt_BCB546_Assignments\KohaneMatt_R_Assignment/file:///C:/Users/mjkoh/Desktop/BCB546x/KohaneMatt_BCB546_Assignments/KohaneMatt_R_Assignment/maize_chr1_for.txt", "C:\Users\mjkoh\Desktop\BCB546x\KohaneMatt_BCB546_Assignments\KohaneMatt_R_Assignment\maize")
+
+
+#File creation, this is where loops are handing but hardcoding can work too.
+
+#
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 1) %>% write.table("maize_chr1_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 2) %>% write.table("maize_chr2_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 3) %>% write.table("maize_chr3_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 4) %>% write.table("maize_chr4_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 5) %>% write.table("maize_chr5_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 6) %>% write.table("maize_chr6_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 7) %>% write.table("maize_chr7_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 8) %>% write.table("maize_chr8_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 9) %>% write.table("maize_chr9_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 10) %>% write.table("maize_chr10_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 
 
-maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 1) %>% write.table("maize_chr1_for.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 
 ```
