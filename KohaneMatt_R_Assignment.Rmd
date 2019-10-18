@@ -9,17 +9,15 @@ output: html_document
 ```{r}
 if (!require("tidyverse")) install.packages("tidyverse")
 library(tidyverse)
+library(tidyr)
 library(ggplot2)
 library(dplyr)
 library(forcats)
 ```
 
 
-
+#Set working directory to the the directory corresponding to this assignment.
 ```{r}
-
-
-
 ##Data Importing:
 
 fang = read.delim("fang_et_al_genotypes.txt", header = TRUE, sep = "\t")
@@ -107,10 +105,6 @@ teosinte_complete %>% rename("SNP_ID" = Row.names)
 ```
 #Make sure that we are in the correct directory for this assignment.
 ```{r}
-install.packages("filesstrings")
-library(filesstrings)
-
-
 #Use Relative path: ./data/maize.output for example.
 
 
@@ -122,12 +116,14 @@ setwd("./KohaneMatt_R_Assignment")
 
 setwd("C:/Users/mjkoh/Desktop/BCB546x/KohaneMatt_BCB546_Assignments/KohaneMatt_R_Assignment/maize")
 
+setwd("./maize")
+
 getwd()
 
 file.move("C:\Users\mjkoh\Desktop\BCB546x\KohaneMatt_BCB546_Assignments\KohaneMatt_R_Assignment/file:///C:/Users/mjkoh/Desktop/BCB546x/KohaneMatt_BCB546_Assignments/KohaneMatt_R_Assignment/maize_chr1_for.txt", "C:\Users\mjkoh\Desktop\BCB546x\KohaneMatt_BCB546_Assignments\KohaneMatt_R_Assignment\maize")
 
 
-#File creation, this is where loops are handing but hardcoding can work too.
+#File creation, this is where loops are handy but hardcoding can work too.
 
 #
 maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 1) %>% write.table("maize_chr1_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
@@ -141,14 +137,183 @@ maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 8) %>%
 maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 9) %>% write.table("maize_chr9_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
 maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 10) %>% write.table("maize_chr10_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
 
+#Now for the files containing chromosome data in the decreasing direction
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 1) %>% write.table("maize_chr1_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 2) %>% write.table("maize_chr2_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 3) %>% write.table("maize_chr3_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 4) %>% write.table("maize_chr4_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 5) %>% write.table("maize_chr5_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 6) %>% write.table("maize_chr6_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 7) %>% write.table("maize_chr7_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 8) %>% write.table("maize_chr8_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 9) %>% write.table("maize_chr9_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+maize_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 10) %>% write.table("maize_chr10_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+#run the below code line in a gitbash shell to move all files into the corresponding maize directory:
+
+## mv maize_chr1_inc.txt maize_chr2_inc.txt maize_chr3_inc.txt maize_chr4_inc.txt maize_chr5_inc.txt maize_chr6_inc.txt maize_chr7_inc.txt maize_chr8_inc.txt maize_chr9_inc.txt maize_chr10_inc.txt maize_chr1_dec.txt maize_chr2_dec.txt maize_chr3_dec.txt maize_chr4_dec.txt maize_chr5_dec.txt maize_chr6_dec.txt maize_chr7_dec.txt maize_chr8_dec.txt maize_chr9_dec.txt maize_chr10_dec.txt maize
+```
+
+##Same thing for teosinte data
+```{r}
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 1) %>% write.table("teosinte_chr1_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 2) %>% write.table("teosinte_chr2_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 3) %>% write.table("teosinte_chr3_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 4) %>% write.table("teosinte_chr4_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 5) %>% write.table("teosinte_chr5_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 6) %>% write.table("teosinte_chr6_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 7) %>% write.table("teosinte_chr7_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 8) %>% write.table("teosinte_chr8_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 9) %>% write.table("teosinte_chr9_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 10) %>% write.table("teosinte_chr10_inc.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
 
 
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 1) %>% write.table("teosinte_chr1_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 2) %>% write.table("teosinte_chr2_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 3) %>% write.table("teosinte_chr3_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 4) %>% write.table("teosinte_chr4_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 5) %>% write.table("teosinte_chr5_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 6) %>% write.table("teosinte_chr6_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 7) %>% write.table("teosinte_chr7_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 8) %>% write.table("teosinte_chr8_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 9) %>% write.table("teosinte_chr9_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+teosinte_complete %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 10) %>% write.table("teosinte_chr10_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+#run below code in gitbash shell to move all files to correct directory:
+
+# mv teosinte_chr1_inc.txt teosinte_chr2_inc.txt teosinte_chr3_inc.txt teosinte_chr4_inc.txt teosinte_chr5_inc.txt teosinte_chr6_inc.txt teosinte_chr7_inc.txt teosinte_chr8_inc.txt teosinte_chr9_inc.txt teosinte_chr10_inc.txt teosinte_chr1_dec.txt teosinte_chr2_dec.txt teosinte_chr3_dec.txt teosinte_chr4_dec.txt teosinte_chr5_dec.txt teosinte_chr6_dec.txt teosinte_chr7_dec.txt teosinte_chr8_dec.txt teosinte_chr9_dec.txt teosinte_chr10_dec.txt teosinte
 
 
 ```
 
+#Replacing "?" with "-"
+
+##Note that if you can set you working directory to the maize/teosinte directories, you won't have to manually move the files using the shell.  This has always plagued me.
+
+#maize:
+```{r}
+
+maize_correct <- data.frame(lapply(maize_complete, as.character), stringsAsFactors = FALSE)
+maize_correct <- sapply(maize_correct, function(x) {x <- gsub("?", "-", x, fixed = TRUE)})
+maize_correct <- as.data.frame(maize_correct)
 
 
+#Conducting this on all chromosomes:
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 1) %>% write.table("maize_chr1_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 2) %>% write.table("maize_chr2_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 3) %>% write.table("maize_chr3_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 4) %>% write.table("maize_chr4_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 5) %>% write.table("maize_chr5_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 6) %>% write.table("maize_chr6_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 7) %>% write.table("maize_chr7_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 8) %>% write.table("maize_chr8_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 9) %>% write.table("maize_chr9_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+maize_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 10) %>% write.table("maize_chr10_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+
+##Run the below code in a gitbash shell, it will overwrite the files made before to account for the changing updated values.
+
+# mv maize_chr1_dec.txt maize_chr2_dec.txt maize_chr3_dec.txt maize_chr4_dec.txt maize_chr5_dec.txt maize_chr6_dec.txt maize_chr7_dec.txt maize_chr8_dec.txt maize_chr9_dec.txt maize_chr10_dec.txt maize
+```
+#teosinte:
+```{r}
+teosinte_correct <- data.frame(lapply(teosinte_complete, as.character), stringsAsFactors = FALSE)
+teosinte_correct <- sapply(teosinte_correct,function(x) {x <- gsub("?","-",x,fixed=TRUE)})
+teosinte_correct <- as.data.frame(teosinte_correct)
+
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 1) %>% write.table("teosinte_chr1_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 2) %>% write.table("teosinte_chr2_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 3) %>% write.table("teosinte_chr3_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 4) %>% write.table("teosinte_chr4_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 5) %>% write.table("teosinte_chr5_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 6) %>% write.table("teosinte_chr6_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 7) %>% write.table("teosinte_chr7_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 8) %>% write.table("teosinte_chr8_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 9) %>% write.table("teosinte_chr9_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+teosinte_correct %>% arrange(Chromosome, desc(Position)) %>% filter(Chromosome == 10) %>% write.table("teosinte_chr10_dec.txt", sep="\t",col.names = FALSE, row.names = FALSE)
+
+##Again, run below code in gitbash shell moving files to correct directory and overwriting for the updated characters.
+
+# mv teosinte_chr1_dec.txt teosinte_chr2_dec.txt teosinte_chr3_dec.txt teosinte_chr4_dec.txt teosinte_chr5_dec.txt teosinte_chr6_dec.txt teosinte_chr7_dec.txt teosinte_chr8_dec.txt teosinte_chr9_dec.txt teosinte_chr10_dec.txt teosinte
+
+```
+
+#Data Visualization through plotting:
+
+```{r}
+library(reshape2)
+library(dplyr)
+library(tidyverse)
+library(tidyr)
+install.packages("tidyr")
+devtools::install_github("tidyverse/tidyr")
+
+melt(maize_complete)
+melt(teosinte_complete)
+
+
+plot_genotypes <- filter(fang, Group %in% c('ZMMMR','ZMMIL', 'ZMMLR', 'ZMPBA', 'ZMPIL', 'ZMPJA')) %>% column_to_rownames(., var = "Sample_ID") 
+ggplot(data = plot_genotypes) + geom_bar(mapping=aes(x=Group)) 
+#This plot visualizes the 
+
+plot_genotypes$
+
+ggplot(data=maize_tidy, aes(x=Geno)) + geom_bar() + facet_wrap(~ Chromosome)
+
+#I could not get the pivot_longer function to be recognized in my R client, if your R recognizes it, you can go ahead and run the below lines to tidy the data for plotting!
+
+maize_plot_data <- maize_complete %>% pivot_longer(-Row.names:-Position, names_to = "Sample_ID", values_to = "Values") 
+
+teosinte_plot_data <- teosinte_complete %>% pivot_longer(-Row.names:-Position, names_to = "Sample_ID", values_to = "Values")
+```
+
+#Visualizations:
+```{r}
+
+install.packages("viridis")  # Install
+library("viridis")           # Load
+
+sp <- ggplot(maize_complete, aes(Position, Chromosome)) + 
+  geom_point(aes(color = Chromosome)) +
+  theme_minimal()+
+  theme(legend.position = "top")
+sp
+
+ggplot(maize_complete, aes(Position, Chromosome))+
+  geom_point(aes(color = Chromosome)) +
+  geom_smooth(aes(color = Chromosome, fill = Chromosome), method = "lm") + 
+  scale_color_viridis(discrete = TRUE, option = "D")+
+  scale_fill_viridis(discrete = TRUE) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+
+maize_complete$
+
+ggplot(data = maize_complete) + geom_bar(mapping=aes(x=Chromosome, color = Chromosome))
+
+
+ggplot(data = maize_complete) + geom_density(mapping=aes(x=Chromosome, color = Chromosome))
+
+ggplot(data = plot_genotypes) + geom_bar(mapping=aes(x=Group)) #This is my plot of choice.
+ggplot(data=maize_complete, aes(x=Chromosome)) + geom_bar() + facet_wrap(~ Chromosome)
+
+maize_complete$
+
+  
+ggplot(data = MergedCombinedFiltered) + 
+  geom_density(mapping=aes(x = PositionRange, fill = Chromosome), alpha = 0.15) +
+  ggtitle("SNP density on its position on the chromosome") +
+  theme(axis.text.x=element_blank())
+  
+```
+
+
+```{r}
+data(mtcars)
+mtcars_wide1 <- mtcars %>% 
+  pivot_wide(names_from = "am", values_from = "mpg")
+
+```
 
 
 
