@@ -23,7 +23,7 @@ library(forcats)
 ##Data Importing:
 
 fang = read.delim("fang_et_al_genotypes.txt", header = TRUE, sep = "\t")
-snp <- read.delim("snp_position.txt", header = TRUE, sep = "\t")
+snp_pos <- read.delim("snp_position.txt", header = TRUE, sep = "\t")
 
 #Alternative Assignment import:
 snp_pos1 <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2019/master/assignments/UNIX_Assignment/snp_position.txt", header = TRUE, sep ="\t")
@@ -67,29 +67,111 @@ object.size(snp_pos) #324472 bytes
 object.size(fang) #12163888 bytes
 ```
 ##Data Processing and Transforming
-```{r}
-#Transpose the fang file, this is much easier in R than in Unix command line.
-transposed_fang <- t(fang)
 
+
+#Transposition of fang file
+```{r}
+transposed_fang <- t(fang)
+```
+
+#Tranposition of both maize and teosinte data
+```{r}
+transposed_maize <- filter(fang, Group %in% c("ZMMLR", "ZMMMR", "ZMMIL")) %>%
+    select(-JG_OTU, -Group) %>% column_to_rownames(., var = "Sample_ID") %>% t() %>%
+    as.data.frame()
+
+transposed_teosinte <- filter(fang, Group %in% c("ZMPBA", "ZMPIL", "ZMPJA")) %>%
+    select(-JG_OTU, -Group) %>% column_to_rownames(., var = "Sample_ID") %>% t() %>% as.data.frame()
+
+```
+
+#Now to gather the needed columns from the snp files
+```{r}
+snp_pos1 <- select(snp_pos, SNP_ID, Chromosome, Position)
+```
+
+```{r}
+rownames(snp_pos1) <- snp_pos1[,1]
+snp_pos1[,1] = NULL
+```
+
+#Transposing and some renaming of both teosinte and maize data
+```{r}
+transposed_maize <- as.data.frame(transposed_maize)
+maize_complete <- merge(snp_pos1, transposed_maize, by = "row.names")
+maize_complete %>% rename("SNP_ID" = Row.names)
+
+transposed_teosinte <- as.data.frame(transposed_teosinte)
+teosinte_complete <- merge(snp_pos1, transposed_teosinte, by = "row.names")
+teosinte_complete %>% rename("SNP_ID" = Row.names)
+```
+#Make sure that we are in the correct directory for this assignment.
+```{r}
+install.packages("filesstrings")
+library(filesstrings)
+
+
+#Use Relative path: ./data/maize.output for example.
+
+
+setwd("C:/Users/mjkoh")
+setwd("./KohaneMatt_R_Assignment")
+
+getwd()
+
+
+
+
+maize_complete %>% arrange(Chromosome, Position) %>% filter(Chromosome == 1) %>% write.table("maize_chr1_for.txt", sep="\t",col.names = FALSE, row.names = FALSE, quote = FALSE)
+
+
+```
+
+
+
+
+
+
+
+```{r}
 #Filter the fang file for the necessary groups, similar to "grep" in Unix.
-teosinte <- filter(fang, Group %in% c('ZMMIL', 'ZMMLR', 'ZMMMR'))
 maize <- filter(fang, Group %in% c('ZMPBA', 'ZMPIL', 'ZMPJA'))
+teosinte <- filter(fang, Group %in% c('ZMMIL', 'ZMMLR', 'ZMMMR'))
 
 #Checking to make sure correct groups have been selected, looks good.
-head(teosinte)
 head(maize)
+head(teosinte)
 
 #Checking unique groups in the columns for assurance.
-unique(teosinte$Group)
 unique(maize$Group)
+unique(teosinte$Group)
 #So far so good.
 
+#Filtering the data for the needed columns
+maize <- maize %>% select(1, 4:986)
+teosinte <- teosinte %>% select(1, 4:986)
+snp_pos <- snp_pos %>% select(1,3,4)
 
-#Now to transpose the data.
-transposed_teosinte <- t(teosinte)
-transposed_maize <- t(maize)
+#Rewriting the maize and teo data to a dataframe without headers so to be efficient for downstream
+transposed_maize <- as.data.frame(t(maize))
+transposed_teo <- as.data.frame(t(teosinte))
 
+
+write_csv(transposed_maize, "MaizeData", col_names = FALSE)
+write_csv(transposed_teosinte, "TeosinteData", col_names = FALSE)
+
+maizeData2 <- read_csv("MaizeData", col_names = TRUE)
+teoData2 <- read_csv("TeosinteData", col_names = TRUE)
+
+Sample_ID <- snp %>% select(1)
+
+maize3 <- cbind(Sample_ID, maizeData2)
+teo3 <- cbind(Sample_ID, teoData2)
 transposed_fang
+
+
+#Transpose the fang file, this is much easier in R than in Unix command line.
+transposed_fang <- t(fang)
 
 
 ```
