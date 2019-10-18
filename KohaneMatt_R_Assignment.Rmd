@@ -110,6 +110,7 @@ teosinte_complete <- merge(snp_pos1, transposed_teosinte, by = "row.names")
 teosinte_complete %>% rename("SNP_ID" = Row.names)
 ```
 #Make sure that we are in the correct directory for this assignment.
+##I don't recommend running every line of these blocks.  Try one of each and save yourself from making and moving 40 unwanted files.
 ```{r}
 #Use Relative path: ./data/maize.output for example.
 
@@ -271,8 +272,6 @@ sp1 <- ggplot(genotypes_plotting, aes(Position, Chromosome)) +
   theme(legend.position = "top")
 sp1
 
-
-
 #A few initial visualization, I think they are the exact same:
 ggplot(data = genotypes_plotting) + geom_point(mapping = aes(x=Chromosome, y =Position))
 
@@ -305,8 +304,6 @@ geno_melt$isHomozygous <- (geno_melt$value=="A/A" | geno_melt$value=="C/C" | gen
 ```{r}
 identities <- geno_melt[order(geno_melt$Sample_ID),]
 groups <- geno_melt[order(geno_melt$Group),]
-
-
 ```
 
 #Setting up plots for both identities and groups
@@ -314,10 +311,12 @@ groups <- geno_melt[order(geno_melt$Group),]
 identities_count <- ddply(genotypes_by_ID, c("Sample_ID"), summarise,counting_heterozygous=sum(!isHomozygous, na.rm=TRUE), counting_homozygous=sum(isHomozygous, na.rm=TRUE),  isNA=sum(is.na(isHomozygous)))
 counting_ID_melt <- melt(identities_count, measure.vars = c("counting_homozygous", "counting_heterozygous", "isNA"))
 plotFinal1 <- ggplot(counting_ID_melt,aes(x = Sample_ID, y= value, fill=variable)) + geom_bar(stat = "identity", position = "stack") + ggtitle("Heterozygosity, Homozygosity and Missing Data") + theme_bw()  + scale_fill_brewer(palette="Set3") 
-plotFinal1
+
 
 groups_count <- ddply(genotypes_by_Group, c("Group"), summarise, counting_homozygous=sum(isHomozygous, na.rm=TRUE), counting_heterozygous=sum(!isHomozygous, na.rm=TRUE), isNA=sum(is.na(isHomozygous)))
 counting_Group_melt <- melt(groups_count, measure.vars = c("counting_homozygous", "counting_heterozygous", "isNA"))
 plotFinal2 <-  ggplot(counting_Group_melt,aes(x = Group, y= value, fill=variable)) + geom_bar(stat = "identity", position = "fill") + ggtitle("Heterozygosity and Missing Data ") + theme_classic()   + scale_fill_brewer(palette="Set3") 
+
+plotFinal1
 plotFinal2
 ```
