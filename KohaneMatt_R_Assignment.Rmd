@@ -5,26 +5,32 @@ date: "October 13, 2019"
 output: html_document
 ---
 
+#Package Installation
+```{r}
+if (!require("tidyverse")) install.packages("tidyverse")
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(forcats)
+```
+
 
 
 ```{r}
 
-if (!require("tidyverse")) install.packages("tidyverse")
-library(tidyverse)
+
 
 ##Data Importing:
 
-#Example import:
-dvst <- read_csv("https://raw.githubusercontent.com/vsbuffalo/bds-files/master/chapter-08-r/Dataset_S1.txt")
-dvst
+fang = read.delim("fang_et_al_genotypes.txt", header = TRUE, sep = "\t")
+snp <- read.delim("snp_position.txt", header = TRUE, sep = "\t")
+
+#Alternative Assignment import:
+snp_pos1 <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2019/master/assignments/UNIX_Assignment/snp_position.txt", header = TRUE, sep ="\t")
 
 
-#Assignment import:
-snp_pos <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2019/master/assignments/UNIX_Assignment/snp_position.txt", header = TRUE, sep ="\t")
-snp_pos
+fang1 <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2019/master/assignments/UNIX_Assignment/fang_et_al_genotypes.txt", header = TRUE,sep = "\t")
 
-fang <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2019/master/assignments/UNIX_Assignment/fang_et_al_genotypes.txt", header = TRUE,sep = "\t")
-fang
 
 
 #Use Relative path: ./data/maize.output for example.
@@ -55,6 +61,10 @@ str(fang)
 #Taking a look at the data
 head(snp_pos)
 head(fang)
+
+#Looking at the size of each file 
+object.size(snp_pos) #324472 bytes
+object.size(fang) #12163888 bytes
 ```
 ##Data Processing and Transforming
 ```{r}
