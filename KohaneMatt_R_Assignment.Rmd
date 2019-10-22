@@ -308,15 +308,20 @@ groups <- geno_melt[order(geno_melt$Group),]
 
 #Setting up plots for both identities and groups
 ```{r}
-identities_count <- ddply(genotypes_by_ID, c("Sample_ID"), summarise,counting_heterozygous=sum(!isHomozygous, na.rm=TRUE), counting_homozygous=sum(isHomozygous, na.rm=TRUE),  isNA=sum(is.na(isHomozygous)))
+identities_count <- ddply(identities, c("Sample_ID"), summarise,counting_heterozygous=sum(!isHomozygous, na.rm=TRUE), counting_homozygous=sum(isHomozygous, na.rm=TRUE),  isNA=sum(is.na(isHomozygous)))
 counting_ID_melt <- melt(identities_count, measure.vars = c("counting_homozygous", "counting_heterozygous", "isNA"))
 plotFinal1 <- ggplot(counting_ID_melt,aes(x = Sample_ID, y= value, fill=variable)) + geom_bar(stat = "identity", position = "stack") + ggtitle("Heterozygosity, Homozygosity and Missing Data") + theme_bw()  + scale_fill_brewer(palette="Set3") 
 
 
-groups_count <- ddply(genotypes_by_Group, c("Group"), summarise, counting_homozygous=sum(isHomozygous, na.rm=TRUE), counting_heterozygous=sum(!isHomozygous, na.rm=TRUE), isNA=sum(is.na(isHomozygous)))
+groups_count <- ddply(groups, c("Group"), summarise, counting_homozygous=sum(isHomozygous, na.rm=TRUE), counting_heterozygous=sum(!isHomozygous, na.rm=TRUE), isNA=sum(is.na(isHomozygous)))
 counting_Group_melt <- melt(groups_count, measure.vars = c("counting_homozygous", "counting_heterozygous", "isNA"))
 plotFinal2 <-  ggplot(counting_Group_melt,aes(x = Group, y= value, fill=variable)) + geom_bar(stat = "identity", position = "fill") + ggtitle("Heterozygosity and Missing Data ") + theme_classic()   + scale_fill_brewer(palette="Set3") 
 
 plotFinal1
 plotFinal2
 ```
+
+
+
+
+
